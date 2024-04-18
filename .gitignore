@@ -6,3 +6,7 @@ deprecated_LallemandDB 1.sql
 
 Tp du cours_B08/
 labSpreadsheetsBenchling/
+
+# Other files to ignore
+
+*.csv

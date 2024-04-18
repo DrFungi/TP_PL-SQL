@@ -1,5 +1,5 @@
 rem Laboratory database
-rem MODIFIED
+rem MODIFIED:     2024-04-18
 rem  
 rem CONGDON       Invoked in RDBMS at build time. 2024-04-16
 rem OATES:        Created: 2024-04-16
@@ -16,14 +16,16 @@ GRANT CREATE MATERIALIZED VIEW,
       CREATE TABLE,
       CREATE TRIGGER,
       CREATE TYPE,
-      CREATE VIEW
+      CREATE VIEW,
+      UNLIMITED TABLESPACE
   TO labo;
+
 
 ALTER SESSION SET CURRENT_SCHEMA=labo;
 ALTER SESSION SET NLS_LANGUAGE=American;
 ALTER SESSION SET NLS_TERRITORY=America;
 
---CONNECT labo/"D45epeUcfhr3_";
+
 
 SET TERMOUT OFF
 SET ECHO OFF
@@ -92,7 +94,7 @@ CREATE TABLE Test (
   CONSTRAINT Test_Unit_FK FOREIGN KEY (unit_id) REFERENCES Unit (unit_id));
 
 CREATE TABLE Sample (
-  Sample_ID       number(10) NOT NULL, 
+  Sample_ID       number(10) GENERATED ALWAYS AS IDENTITY, 
   Requestor_ID    number(10) NOT NULL, 
   Technician_ID   number(10) NOT NULL,
   type_ID         number(10) NOT NULL, 
@@ -125,20 +127,16 @@ CREATE TABLE Result (
   CONSTRAINT Result_Sample_FK FOREIGN KEY (Sample_id) REFERENCES Sample (Sample_ID),
   CONSTRAINT Result_Test_FK FOREIGN KEY (test_id) REFERENCES Test (test_id));
 
---ALTER TABLE Sample ADD CONSTRAINT Sample_Requestor_FK FOREIGN KEY (Requestor_ID) REFERENCES Requestor (Requestor_ID);
---ALTER TABLE Sample ADD CONSTRAINT Sample_Technician_FK FOREIGN KEY (Technician_ID) REFERENCES Technician (Technicien_ID);
---ALTER TABLE Sample ADD CONSTRAINT Sample_SampleType_FK FOREIGN KEY (type_ID) REFERENCES SampleType (type_ID);
---ALTER TABLE Sample ADD CONSTRAINT Sample_YeastStrain_FK FOREIGN KEY (Stain_ID) REFERENCES YeastStrain (Stain_ID);
---ALTER TABLE Test ADD CONSTRAINT Test_Unit_FK FOREIGN KEY (unit_id) REFERENCES Unit (unit_id);
---ALTER TABLE Sample ADD CONSTRAINT Sample_Application_FK FOREIGN KEY (App_id) REFERENCES Application (App_id);
---ALTER TABLE Result ADD CONSTRAINT Result_Sample_FK FOREIGN KEY (Sample_id) REFERENCES Sample (Sample_ID);
---ALTER TABLE Result ADD CONSTRAINT Result_Test_FK FOREIGN KEY (test_id) REFERENCES Test (test_id);
---ALTER TABLE Sample ADD CONSTRAINT Sample_Origin_FK FOREIGN KEY (origin_id) REFERENCES Origin (origin_ID);
---ALTER TABLE Sample ADD CONSTRAINT Sample_BusinessUnit_FK FOREIGN KEY (BusinessUnit_id) REFERENCES BusinessUnit (BusinessUnit_ID);
+REM
+REM VALUES TO INSERT WILL BE PASTED BELOW
+REM
 
+INSERT INTO TECHNICIAN (TECHNICIAN_NAME) VALUES ('David');
+INSERT INTO TECHNICIAN (TECHNICIAN_NAME) VALUES ('Gulnara');
+INSERT INTO TECHNICIAN (TECHNICIAN_NAME) VALUES ('Hera');
+INSERT INTO TECHNICIAN (TECHNICIAN_NAME) VALUES ('Guy');
+INSERT INTO TECHNICIAN (TECHNICIAN_NAME) VALUES ('Julie');
 
-
-CREATE SEQUENCE seq_Sample NOCACHE;
 
 SET TERMOUT ON
 SET ECHO ON
